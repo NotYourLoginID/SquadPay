@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SquadPay</string>
+    <string name="test_string">Testing</string>
 </resources>
