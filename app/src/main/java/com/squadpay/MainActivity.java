@@ -1,8 +1,10 @@
 package com.squadpay;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.firebase.client.Firebase;
 
@@ -18,6 +20,11 @@ public class MainActivity extends AppCompatActivity{
         Firebase.setAndroidContext(this);
 
         Firebase myFirebaseRef = new Firebase("https://squadpay-live.firebaseio.com/");
+    }
+
+    public void attemptLogin(View view){
+        Intent intent = new Intent(this, SquadPayTabs.class);
+        startActivity(intent);
     }
 }
 

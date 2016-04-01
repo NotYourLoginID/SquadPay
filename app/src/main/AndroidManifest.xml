@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.squadpay">
 
-    <!--Add internet permission for Firebase-->
+    <!-- Add internet permission for Firebase -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -20,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SquadPayTabs"
+            android:label="@string/title_activity_squad_pay_tabs"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

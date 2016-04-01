@@ -55,7 +55,8 @@
         android:id="@+id/loginButton"
         android:layout_below="@+id/loginPassword"
         android:layout_alignEnd="@+id/loginPassword"
-        android:layout_alignStart="@+id/loginPassword" />
+        android:layout_alignStart="@+id/loginPassword"
+        android:onClick="attemptLogin"/>
 
     <TextView
         android:layout_width="wrap_content"
