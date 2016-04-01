@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SquadPay</string>
     <string name="login">Login</string>
-    <string name="title_activity_squad_pay_tabs">SquadPayTabs</string>
+    <string name="title_activity_squad_pay_tabs">SquadPay</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
 </resources>
