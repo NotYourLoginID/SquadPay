@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Actions Settings (Max B.) -->
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+
+    <!-- "Add a Squad", physically create a new squad in the database (Max B.) -->
+    <item
+        android:id="@+id/add_squad"
+        android:title="@string/create_squad"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:onClick="createNewSquad"
+        app:showAsAction="ifRoom"/>
 
 </menu>
