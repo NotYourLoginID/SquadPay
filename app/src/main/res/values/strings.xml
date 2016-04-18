@@ -7,5 +7,5 @@
     <string name="create_squad">Create a Squad</string>
     <string name="new_squad">New Squad</string>
     <string name="enter_name">Name</string>
-    <string name="select_all">Select All</string>
+    <string name="select_vis">Select All Visible</string>
 </resources>

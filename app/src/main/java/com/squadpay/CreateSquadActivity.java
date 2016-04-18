@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 
 /**
@@ -28,7 +30,7 @@ public class CreateSquadActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
     /**
      * Keeps track of selected data. Keys are from myDataset. Values are booleans (true -> selected)
      */
@@ -119,24 +121,34 @@ public class CreateSquadActivity extends AppCompatActivity {
     public void personSelectAll(View v) {
         View v1;
 
+        LinearLayoutManager llm = mLayoutManager;
+        int firstVis = llm.findFirstVisibleItemPosition();
+        int lastVis = llm.findLastCompletelyVisibleItemPosition();
+
+        if (firstVis == 0) { firstVis = 1; } // Current user is always highlighted
         if (selectedAll() == false) {
-            for (int i = 1; i < myDataset.length; i++) {
+            for (int i = firstVis; i <= lastVis; i++) {
                 map.put(myDataset[i], false);
             }
         } else {
-            for (int i = 1; i < myDataset.length; i++) {
+            for (int i = firstVis; i <= lastVis; i++) {
                 map.put(myDataset[i], true);
             }
         }
-        for (int i = 1; i < myDataset.length; i++) {
+        for (int i = firstVis; i <= lastVis; i++) {
             v1 = getItem(i);
             personSelection(v1);
         }
     }
 
-    // Return true if all users are selected
+    // Return true if all users are selected in the visible recyclerview
     private boolean selectedAll() {
-        for (int i = 1; i < myDataset.length; i++) {
+        LinearLayoutManager llm = mLayoutManager;
+        int firstVis = llm.findFirstVisibleItemPosition();
+        int lastVis = llm.findLastCompletelyVisibleItemPosition();
+
+        if (firstVis == 0) { firstVis = 1; } // Current user is always highlighted
+        for (int i = firstVis; i <= lastVis; i++) {
             if (map.get(myDataset[i]) == false) {
                 return false;
             }
@@ -179,7 +191,8 @@ public class CreateSquadActivity extends AppCompatActivity {
         } else {
             // This is where the squad will be added to the database eventually
             // If selected then add to database, etc.
-            Toast.makeText(this, "You have created a new Squad!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "You have created a new Squad!", Toast.LENGTH_SHORT).show();
+            onBackPressed(); // go back
         }
     }
 
