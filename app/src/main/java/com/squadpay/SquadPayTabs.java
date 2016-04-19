@@ -1,5 +1,8 @@
 package com.squadpay;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,9 +21,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SquadPayTabs extends AppCompatActivity {
-
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -72,7 +75,6 @@ public class SquadPayTabs extends AppCompatActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -91,8 +93,19 @@ public class SquadPayTabs extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == R.id.add_squad) {
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /** Create a new squad. Clicking the action button (defined in the tabs menu xml file)
+     *  will open the CreateSquadActivity. (Max B.)
+     */
+    public void createNewSquad(MenuItem item) {
+        Intent intent = new Intent(this, CreateSquadActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -107,7 +120,6 @@ public class SquadPayTabs extends AppCompatActivity {
 
         public PlaceholderFragment() {
         }
-
         /**
          * Returns a new instance of this fragment for the given section
          * number.

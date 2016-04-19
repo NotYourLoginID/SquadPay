@@ -8,7 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.squadpay.MainActivity"
-    android:clickable="true">
+    android:clickable="true"
+    android:background="@color/light_grey"> <!-- Added light grey bg (Max B.) -->
     <!--hey-->
     <TextView
         android:layout_width="wrap_content"
