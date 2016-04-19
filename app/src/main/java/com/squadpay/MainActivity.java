@@ -12,14 +12,17 @@ import com.firebase.client.Firebase;
 // be no action bar. May be a better way to fix this
 public class MainActivity extends AppCompatActivity{
 
+    private static final String FIREBASE_URL = "https://squadpay-live.firebaseio.com";
+    private Firebase mFirebaseRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // This is a test to see if commit and push works for me (Max B.)
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Firebase.setAndroidContext(this);
+        // Firebase.setAndroidContext(this);
 
-        Firebase myFirebaseRef = new Firebase("https://squadpay-live.firebaseio.com/");
+        mFirebaseRef = new Firebase(FIREBASE_URL);
     }
 
     public void attemptLogin(View view){
