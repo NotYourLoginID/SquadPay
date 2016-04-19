@@ -1,0 +1,138 @@
+{
+  "expenses" : {
+    "exp01" : {
+      "collected" : 6.01,
+      "created" : 1461024000,
+      "description" : "That one time I bought pizza.",
+      "members" : {
+        "cdsekira" : {
+          "assigned" : 1461024000,
+          "due" : 5.98
+        },
+        "chris2" : {
+          "assigned" : 1461024000,
+          "due" : 6.01,
+          "method" : "Venmo",
+          "paid" : 1461048600
+        }
+      },
+      "owner" : "cdsekira",
+      "squad" : "test01",
+      "title" : "Dominos",
+      "total" : 11.99,
+      "updated" : 1461048600
+    },
+    "exp02" : {
+      "collected" : 1000,
+      "completed" : 1459641600,
+      "created" : 1459468800,
+      "description" : "March 2016 rent and utilities for 101 College Ln.",
+      "members" : {
+        "cdsekira" : {
+          "assigned" : 1459468800,
+          "due" : 500,
+          "method" : "Venmo",
+          "paid" : 1459555200
+        },
+        "chris3" : {
+          "assigned" : 1459468800,
+          "due" : 500,
+          "method" : "Cash",
+          "paid" : 1459641600
+        }
+      },
+      "owner" : "chris3",
+      "squad" : "test02",
+      "title" : "March Rent",
+      "total" : 1000,
+      "updated" : 1459641600
+    }
+  },
+  "squads" : {
+    "test01" : {
+      "expenses" : {
+        "exp01" : true
+      },
+      "members" : {
+        "cdsekira" : true,
+        "chris2" : true,
+        "chris3" : true
+      },
+      "squadname" : "SuperSquad"
+    },
+    "test02" : {
+      "expenses" : {
+        "exp02" : true
+      },
+      "members" : {
+        "cdsekira" : true,
+        "chris3" : true
+      },
+      "squadname" : "MiniSquad"
+    }
+  },
+  "usernames" : {
+    "cdsekira" : "e386d2ca-4c08-4d3b-8373-2a4629fb924c",
+    "chris2" : "800a1a88-968a-48fd-b23d-aa50efa128fd",
+    "chris3" : "1d86b80c-e3b9-4201-8239-4ef36e39d5d2"
+  },
+  "users" : {
+    "1d86b80c-e3b9-4201-8239-4ef36e39d5d2" : {
+      "displayname" : "Chris Test",
+      "expenses" : {
+        "admins" : {
+          "exp02" : true
+        },
+        "all" : {
+          "exp02" : true
+        },
+        "completed" : {
+          "exp02" : true
+        }
+      },
+      "squads" : {
+        "test01" : true,
+        "test02" : true
+      },
+      "username" : "chris3"
+    },
+    "800a1a88-968a-48fd-b23d-aa50efa128fd" : {
+      "displayname" : "Chris Arikes",
+      "expenses" : {
+        "all" : {
+          "exp01" : true
+        },
+        "completed" : {
+          "exp01" : true
+        }
+      },
+      "squads" : {
+        "test01" : true
+      },
+      "username" : "chris2"
+    },
+    "e386d2ca-4c08-4d3b-8373-2a4629fb924c" : {
+      "displayname" : "Chris Sekira",
+      "expenses" : {
+        "admins" : {
+          "exp01" : true
+        },
+        "all" : {
+          "exp01" : true,
+          "exp02" : true
+        },
+        "assigned" : {
+          "exp01" : true
+        },
+        "completed" : {
+          "exp02" : true
+        }
+      },
+      "squads" : {
+        "test01" : true,
+        "test02" : true
+      },
+      "username" : "cdsekira"
+    }
+  }
+}
