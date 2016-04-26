@@ -134,9 +134,6 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
 
     public void displayView(int viewId) {
 
-        Fragment fragment = null;
-        String title = getString(R.string.app_name);
-
         switch (viewId) {
             case R.id.nav_account_info:
                 Intent intent = new Intent(this, AccountInfo.class);
@@ -148,10 +145,6 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
                 break;
 
         }
-
-
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
