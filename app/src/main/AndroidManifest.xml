@@ -29,8 +29,18 @@
         <activity
             android:name=".CreateSquadActivity"
             android:label="@string/new_squad"
-            android:theme="@style/AppTheme"
-            android:parentActivityName="com.squadpay.SquadPayTabs"/>
+            android:parentActivityName=".SquadPayTabs"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".AccountInfo"
+            android:label="@string/account_info"
+            android:parentActivityName=".SquadPayTabs"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Settings"
+            android:label="@string/settings"
+            android:parentActivityName=".SquadPayTabs"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
