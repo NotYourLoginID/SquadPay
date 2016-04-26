@@ -4,7 +4,7 @@
     android:id="@+id/linear_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!-- Put views and layouts common to all in the recycler view for squad create here (Max B.) -->
+    <!-- Put views and layouts common to all or some in the recycler view for squadtabs here (Max B.) -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +20,5 @@
             android:textColor="@color/black"
             android:id="@+id/textViewTabs"/>
     </FrameLayout>
-        <!--android:onClick="personSelection"-->
 
 </LinearLayout>
