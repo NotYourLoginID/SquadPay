@@ -30,6 +30,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SquadPayTabs extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     /**
