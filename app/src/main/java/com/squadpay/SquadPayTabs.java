@@ -1,8 +1,12 @@
 package com.squadpay;
 
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,9 +24,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
-public class SquadPayTabs extends AppCompatActivity {
+public class SquadPayTabs extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -37,6 +42,10 @@ public class SquadPayTabs extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+    DrawerLayout drawer;
+    NavigationView navigationView;
+    ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +70,17 @@ public class SquadPayTabs extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        // Chris - removed the FAB and SnackBar
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        //get drawer and create listener for hamburger click
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        //attach listener on navigation drawer menu items
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
         // Because I (Max B.) changed the background color of this activity in the XML to emulate
         // dividers between view items in the recyclerview, we have to implement a runtime change
         // of the status bar to keep it in sync with the overall theme. This is a sloppy way of
@@ -110,6 +121,39 @@ public class SquadPayTabs extends AppCompatActivity {
     public void createNewSquad(MenuItem item) {
         Intent intent = new Intent(this, CreateSquadActivity.class);
         startActivity(intent);
+    }
+
+    public boolean onNavigationItemSelected(MenuItem item) {
+        displayView(item.getItemId());
+        return true;
+    }
+
+    public void displayView(int viewId) {
+        //display a view based on which item in navigation drawer is clicked
+        switch (viewId) {
+            case R.id.nav_account_info:
+                Intent intent = new Intent(this, AccountInfo.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_settings:
+                Intent intent2 = new Intent(this, Settings.class);
+                startActivity(intent2);
+                break;
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     /**
