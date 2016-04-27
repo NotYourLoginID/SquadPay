@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/linear_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- Put views and layouts common to all or some in the recycler view for squadtabs here (Max B.) -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:id="@+id/frameLayoutTabs"
+        android:padding="16dp"
+        android:elevation="2dp"
+        android:layout_marginBottom="12dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="4dp"
+            android:textColor="@color/black"
+            android:id="@+id/textViewTabs"/>
+    </FrameLayout>
+
+</LinearLayout>
