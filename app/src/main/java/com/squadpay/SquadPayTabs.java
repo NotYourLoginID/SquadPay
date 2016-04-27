@@ -7,6 +7,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,6 +46,8 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private SparseArray<View.OnClickListener> floatingActionButtonOnClickListeners;
+    private FloatingActionButton floatingActionButton;
 
     DrawerLayout drawer;
     NavigationView navigationView;
@@ -77,6 +83,10 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        setupTabs();
+        setFABOnClickListeners();
+
         //attach listener on navigation drawer menu items
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -90,6 +100,74 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorPrimary));
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        setFabVisibility(mViewPager.getCurrentItem());
+    }
+
+    private void setupTabs() {
+        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(adapter);
+        TabLayout tabLayout= (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                setFabVisibility(mViewPager.getCurrentItem());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                switch (state) {
+                    case ViewPager.SCROLL_STATE_DRAGGING:
+                        floatingActionButton.hide();
+                        break;
+                }
+            }
+        });
+    }
+
+    private void setFabVisibility(int position) {
+        View.OnClickListener floatingActionButtonClickListener = floatingActionButtonOnClickListeners.get(position);
+
+        floatingActionButton.setOnClickListener(floatingActionButtonClickListener);
+        floatingActionButton.show();
+
+    }
+
+    private void setFABOnClickListeners() {
+        if (floatingActionButtonOnClickListeners == null) {
+            floatingActionButtonOnClickListeners = new SparseArray<>();
+        }
+
+        floatingActionButtonOnClickListeners.put(0, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String txt = "FEED";
+                createtoast(txt);
+            }
+        });
+
+        floatingActionButtonOnClickListeners.put(1, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewSquad2();
+            }
+        });
+
+        floatingActionButtonOnClickListeners.put(2, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewExpense();
+            }
+        });
+    }
+
+    public void createtoast(String txt) {
+        Toast.makeText(this, txt, Toast.LENGTH_SHORT).show();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -120,6 +198,14 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
      */
     public void createNewSquad(MenuItem item) {
         Intent intent = new Intent(this, CreateSquadActivity.class);
+        startActivity(intent);
+    }
+    public void createNewSquad2() {
+        Intent intent = new Intent(this, CreateSquadActivity.class);
+        startActivity(intent);
+    }
+    public void createNewExpense() {
+        Intent intent = new Intent(this, CreateExpenseActivity.class);
         startActivity(intent);
     }
 
