@@ -5,6 +5,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.design.widget.FloatingActionButton;
@@ -61,6 +62,9 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
     private Firebase firebaseRef;
     private AuthData authData;
 
+    ViewPager Tab;
+    TabPagerAdapter TabAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,16 +92,44 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(SquadPayTabs.this, MainActivity.class));
         }
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.addTab(tabLayout.newTab().setText("Feed"));
+        tabLayout.addTab(tabLayout.newTab().setText("Squads"));
+        tabLayout.addTab(tabLayout.newTab().setText("Expenses"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.container);
+        final TabPagerAdapter adapter = new TabPagerAdapter
+                (getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        //mViewPager = (ViewPager) findViewById(R.id.container);
+       // mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+       // TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        //tabLayout.setupWithViewPager(mViewPager);
 
         //get drawer and create listener for hamburger click
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -107,7 +139,7 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
-        setupTabs();
+        //setupTabs();
         setFABOnClickListeners();
 
         //attach listener on navigation drawer menu items
@@ -123,11 +155,7 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorPrimary));
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-        setFabVisibility(mViewPager.getCurrentItem());
-    }
+
 
     private void setupTabs() {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
