@@ -23,8 +23,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,22 +79,15 @@ public class CreateSquadActivity extends AppCompatActivity {
             public void onClick(View v) {
                 createNewSquad();
             }
-
         });
 
     }
 
-    // Return a specific View from our RecyclerView by index of position (Max B.)
-    private View getItem(int pos) {
-        return mRecyclerView.getLayoutManager().findViewByPosition(pos);
-    }
 
     /**
      * This method should eventually push new squads onto the database.
      * Only selected users will be added to a squad and the current user
      * must obey the input constraints required to make a squad.
-     *
-     * @param item
      */
     public void createNewSquad() {
         TextView tv = (TextView) findViewById(R.id.editText);
