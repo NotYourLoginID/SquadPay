@@ -57,13 +57,21 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
 
-    private static final String FIREBASE_URL = "https://squadpay-live.firebaseio.com";
+//    private static final String FIREBASE_URL = "https://squadpay-live.firebaseio.com";
     private Firebase firebaseRef;
     private AuthData authData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firebaseRef = new Firebase(getString(R.string.FIREBASE_URL));
+        if (firebaseRef.getAuth() == null){
+            Intent startLogin = new Intent(SquadPayTabs.this, MainActivity.class);
+            startActivity(startLogin);
+            this.finish();
+        }
+
+
         setContentView(R.layout.activity_squad_pay_tabs);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -73,7 +81,7 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
 
-        firebaseRef = new Firebase(FIREBASE_URL);
+
         authData = firebaseRef.getAuth();
 
         if(authData == null) {

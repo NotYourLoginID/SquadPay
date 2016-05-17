@@ -21,22 +21,35 @@ import com.firebase.client.FirebaseError;
 // be no action bar. May be a better way to fix this
 public class MainActivity extends AppCompatActivity{
 
-    private static final String FIREBASE_URL = "https://squadpay-live.firebaseio.com";
+//    private static final String FIREBASE_URL = "https://squadpay-live.firebaseio.com";
     private Firebase firebaseRef;
 
     private EditText emailInput;
     private EditText passwordInput;
     private Button signInButton;
+    private Button createAccountButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        firebaseRef = new Firebase(FIREBASE_URL);
+        firebaseRef = new Firebase(getString(R.string.FIREBASE_URL));
 
         emailInput = (EditText) findViewById(R.id.loginEmail);
         passwordInput = (EditText) findViewById(R.id.loginPassword);
+        createAccountButton = (Button) findViewById(R.id.signUpButton);
+
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startCreateUser = new Intent(MainActivity.this, SignUpActivity.class);
+                // android:noHistory="true" should kill the activity
+                // fingers crossed
+                startActivity(startCreateUser);
+            }
+        });
+
 
         // neat thing that allows you to hit enter instead of having to find button
         // probably should implement in other activity as well
@@ -73,7 +86,10 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onAuthenticated(AuthData authData) {
-                finish();
+                Intent startTabs = new Intent(MainActivity.this, SquadPayTabs.class);
+                // android:noHistory="true" should kill the activity
+                // fingers crossed
+                startActivity(startTabs);
             }
 
             @Override
