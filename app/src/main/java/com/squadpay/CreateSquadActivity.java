@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The CreateSquadActivity allows the user to create their own squad based off of the current users
@@ -43,7 +45,7 @@ public class CreateSquadActivity extends AppCompatActivity {
      */
     String newSquadName = "";
     ArrayList<String> squadMembers = new ArrayList();
-    HashMap<String, String> uid = new HashMap<>();
+    ArrayList<String> uid = new ArrayList();
     String addUser;
     String myId;
 
@@ -56,24 +58,7 @@ public class CreateSquadActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         // TRying to find current user here
         myId = ref.getAuth().getUid();
-        myId ="800a1a88-968a-48fd-b23d-aa50efa128fd";
-        ref.child("username").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String p = (String) dataSnapshot.getValue();
-                if (p == null) { p = "800a1a88-968a-48fd-b23d-aa50efa128fd"; }
-                for (DataSnapshot c : dataSnapshot.getChildren()) {
-                    if (p.equals(myId) == true) {
-                        squadMembers.add(p);
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -88,30 +73,17 @@ public class CreateSquadActivity extends AppCompatActivity {
         mAdapter = new PersonDataAdapter(squadMembers);
         mRecyclerView.setAdapter(mAdapter);
 
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_create_squad, menu);
-        return true;
-    }
+        Button createSquadButton = (Button) findViewById(R.id.create_squad);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        createSquadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewSquad();
+            }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        } else if (id == R.id.add_squad) {
-            return true;
-        }
+        });
 
-        return super.onOptionsItemSelected(item);
     }
 
     // Return a specific View from our RecyclerView by index of position (Max B.)
@@ -126,7 +98,7 @@ public class CreateSquadActivity extends AppCompatActivity {
      *
      * @param item
      */
-    public void createNewSquad(MenuItem item) {
+    public void createNewSquad() {
         TextView tv = (TextView) findViewById(R.id.editText);
         String s = null;
         if (tv != null) {
@@ -141,8 +113,41 @@ public class CreateSquadActivity extends AppCompatActivity {
             // If selected then add to database, etc.
             newSquadName = s;
             Toast.makeText(this, "You have created a new Squad!", Toast.LENGTH_SHORT).show();
-            //Send out newSquadName
-            //Send out uid
+
+            uid.add(myId);
+
+            Map<String, Object> squad = new HashMap<String, Object>();
+
+            squad.put("squadname", newSquadName);
+
+            Map<String, Object> members = new HashMap<String, Object>();
+            for(String member: uid) {
+                members.put(member, true);
+            }
+            squad.put("members", members);
+
+            Firebase pushRef = ref.child("squads").push();
+            pushRef.setValue(squad);
+
+            final String pushKey = pushRef.getKey();
+
+            ref.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                        String tUID = postSnapshot.getKey().toString();
+                        if(uid.contains(tUID)) {
+                            ref.child("users").child(tUID).child("squads").child(pushKey).setValue(true);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+
+                }
+            });
+
             onBackPressed(); // go back
         }
     }
@@ -160,7 +165,7 @@ public class CreateSquadActivity extends AppCompatActivity {
                     if (squadMembers.contains(addUser)) { return; } // if the user exists don't add
                     squadMembers.add(addUser);
                     mAdapter.notifyDataSetChanged(); // update recyclerview
-                    uid.put(addUser, p); // put this user and their id in the hashmap uid
+                    uid.add(p); // put uid into list
                     editText.setText(""); // clear the text if you found a person
                 } else {
                     Toast.makeText(getApplicationContext(), "This user does not exist!", Toast.LENGTH_LONG).show();
@@ -194,7 +199,7 @@ class PersonDataAdapter extends RecyclerView.Adapter<PersonDataAdapter.ViewHolde
             // still need to figure out this part below before I can add other views
             // to this recycler view. This might not be necessary right now
             if (v.getParent() != null) { ((ViewGroup) v.getParent()).removeView(v); }
-            v.setTextSize(20f);
+            v.setTextSize(15f);
             mTextView = v;
         }
     }

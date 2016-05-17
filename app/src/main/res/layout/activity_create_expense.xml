@@ -98,5 +98,6 @@
         android:id="@+id/create_expense"
         android:layout_gravity="bottom|right"
         android:layout_alignBottom="@+id/scrollView"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_margin="3dp"/>
 </RelativeLayout>
