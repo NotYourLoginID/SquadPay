@@ -6,12 +6,73 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
+    android:id="@+id/relView"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.squadpay.Settings">
+    tools:context="com.squadpay.Settings"
+    android:theme="@style/Base.DialogWindowTitleBackground.AppCompat"
+    android:touchscreenBlocksFocus="false">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Reset Password"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/email"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true"
+        android:hint="Email"/>
+
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/settings" />
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/oldPassword"
+        android:layout_below="@+id/email"
+        android:layout_alignParentStart="true"
+        android:hint="Old Password" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/newPassword"
+        android:layout_below="@+id/oldPassword"
+        android:layout_alignParentStart="true"
+        android:hint="New Password" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/confirmPassword"
+        android:layout_below="@+id/newPassword"
+        android:layout_alignParentStart="true"
+        android:hint="Confirm Password"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Password"
+        android:id="@+id/pwd_button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:elevation="11dp"
+        android:background="#3037c9"
+        android:textColor="#fbf7f7"
+        android:textSize="20dp" />
+
 
 </RelativeLayout>
