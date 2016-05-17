@@ -27,10 +27,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:text="Name"
+                android:hint="Name"
                 android:ems="10"
                 android:selectAllOnFocus="true"
-                android:id="@+id/editText2"
+                android:id="@+id/name"
                 android:layout_gravity="center_horizontal" />
 
             <EditText
@@ -38,9 +38,9 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:ems="10"
-                android:id="@+id/editText3"
+                android:id="@+id/amount"
                 android:layout_gravity="center_horizontal"
-                android:text="Total Amount"
+                android:hint="Total Amount"
                 android:selectAllOnFocus="true"/>
 
             <EditText
@@ -49,11 +49,11 @@
                 android:inputType="textMultiLine"
                 android:ems="10"
                 android:selectAllOnFocus="true"
-                android:id="@+id/editText4"
+                android:id="@+id/description"
                 android:layout_gravity="center_horizontal"
                 android:maxLines="6"
                 android:maxLength="140"
-                android:text="Expense Description"
+                android:hint="Expense Description"
                 android:longClickable="false" />
 
             <LinearLayout
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Choose Squad: "
+                    android:hint="Choose Squad: "
                     android:id="@+id/textView2"
                     android:paddingTop="10dp"
                     android:textSize="17dp"/>
@@ -94,8 +94,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Publish Expense"
-        android:id="@+id/button"
+        android:text="Create Expense"
+        android:id="@+id/create_expense"
         android:layout_gravity="bottom|right"
         android:layout_alignBottom="@+id/scrollView"
         android:layout_alignParentStart="true" />
