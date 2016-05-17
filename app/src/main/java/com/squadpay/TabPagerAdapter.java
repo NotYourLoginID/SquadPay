@@ -14,11 +14,11 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int i) {
         switch (i) {
             case 0:
-                return new Feed();
-            case 1:
                 return new Squads();
-            case 2:
+            case 1:
                 return new Expenses();
+            case 2:
+                return new Feed();
         }
         return null;
 

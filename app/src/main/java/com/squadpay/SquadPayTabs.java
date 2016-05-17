@@ -93,9 +93,9 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
         }
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.addTab(tabLayout.newTab().setText("Feed"));
         tabLayout.addTab(tabLayout.newTab().setText("Squads"));
         tabLayout.addTab(tabLayout.newTab().setText("Expenses"));
+        tabLayout.addTab(tabLayout.newTab().setText("Feed"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.container);
@@ -231,7 +231,8 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(SquadPayTabs.this, Settings.class);
+            startActivity(intent);
         }
         else if (id == R.id.logout) {
             firebaseRef.unauth();

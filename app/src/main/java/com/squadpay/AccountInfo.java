@@ -14,7 +14,8 @@ public class AccountInfo extends AppCompatActivity {
     private Firebase ref;
     private String myID;
     private String username;
-    private String displayname;
+    private String firstName;
+    private String lastName;
     private String temp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +31,20 @@ public class AccountInfo extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     System.out.println(postSnapshot.toString());
-                    if (postSnapshot.getKey().toString().equals("displayname")){
-                        displayname = postSnapshot.getValue().toString();
-                        final TextView textViewToChange = (TextView) findViewById(R.id.account_name);
-                        textViewToChange.setText("Display Name:  " + displayname);
+                    if (postSnapshot.getKey().toString().equals("firstName")){
+                        firstName = postSnapshot.getValue().toString();
+                    }
+                    if (postSnapshot.getKey().toString().equals("lastName")) {
+                        lastName = postSnapshot.getValue().toString();
                     }
                     if (postSnapshot.getKey().toString().equals("username")){
                         username = postSnapshot.getValue().toString();
                         final TextView textViewToChange2 = (TextView) findViewById(R.id.user_name);
                         textViewToChange2.setText("User Name:  " +username);
                     }
-
                 }
+                final TextView textViewToChange = (TextView) findViewById(R.id.account_name);
+                textViewToChange.setText("Name:  " + firstName + " " + lastName);
             }
 
             @Override

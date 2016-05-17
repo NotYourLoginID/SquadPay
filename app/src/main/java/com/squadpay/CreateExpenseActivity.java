@@ -148,6 +148,29 @@ public class CreateExpenseActivity extends AppCompatActivity {
                             firebaseRef.child("users").child(member).child("expenses").child("all").child(pushKey).setValue(true);
                         }
 
+                        firebaseRef.child("users").child(firebaseRef.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            String firstName;
+                            String lastName;
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                                    if(postSnapshot.getKey().toString().equals("firstName")) {
+                                        firstName = postSnapshot.getValue().toString();
+                                    }
+                                    else if(postSnapshot.getKey().toString().equals("lastName")) {
+                                        lastName = postSnapshot.getValue().toString();
+                                    }
+                                }
+
+                                firebaseRef.child("feed").push().setValue("A new expense called '" + name.getText().toString() + "' was just created by " + firstName + " " + lastName);
+
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
                     }
 
                     @Override

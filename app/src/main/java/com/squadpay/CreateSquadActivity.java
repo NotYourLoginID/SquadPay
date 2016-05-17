@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ServerValue;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
@@ -131,6 +132,28 @@ public class CreateSquadActivity extends AppCompatActivity {
                             ref.child("users").child(tUID).child("squads").child(pushKey).setValue(true);
                         }
                     }
+                    ref.child("users").child(ref.getAuth().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        String firstName;
+                        String lastName;
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                                if(postSnapshot.getKey().toString().equals("firstName")) {
+                                    firstName = postSnapshot.getValue().toString();
+                                }
+                                else if(postSnapshot.getKey().toString().equals("lastName")) {
+                                    lastName = postSnapshot.getValue().toString();
+                                }
+                            }
+
+                            ref.child("feed").push().setValue("A new squad called '" + newSquadName + "' was just created by " + firstName + " " + lastName);
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
                 }
 
                 @Override
