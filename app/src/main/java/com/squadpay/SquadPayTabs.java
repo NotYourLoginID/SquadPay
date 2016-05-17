@@ -274,6 +274,10 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
                 Intent intent2 = new Intent(this, Settings.class);
                 startActivity(intent2);
                 break;
+            case R.id.nav_logout:
+                firebaseRef.unauth();
+                Intent intent3 = new Intent(SquadPayTabs.this, SquadPayTabs.class);
+                startActivity(intent3);
 
         }
 
