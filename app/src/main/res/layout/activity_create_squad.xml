@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/enter_name"
+            android:text="@string/enter_squad"
             android:id="@+id/textView"
             android:layout_gravity="left|top" />
 
@@ -48,13 +48,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <Button
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/select_vis"
+            android:layout_margin="12dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black"
+            android:text="@string/user"
+            android:id="@+id/textView1"
+            android:layout_gravity="left|bottom" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="58dp"
+            android:ems="7"
+            android:id="@+id/editText1"
+            android:layout_gravity="left|bottom" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_user_button"
             android:id="@+id/button1"
-            android:layout_gravity="left|bottom"
-            android:onClick="personSelectAll"/>
+            android:layout_gravity="right|bottom"
+            android:onClick="findUser"/>
 
     </FrameLayout>
 
