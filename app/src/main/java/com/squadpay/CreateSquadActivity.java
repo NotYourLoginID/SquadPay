@@ -17,8 +17,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -31,19 +37,43 @@ public class CreateSquadActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private LinearLayoutManager mLayoutManager;
+    private Firebase ref;
     /**
      * Keeps track of selected data. Keys are from myDataset. Values are booleans (true -> selected)
      */
-    private HashMap<String, Boolean> map = new HashMap<>();
-    // Hardcoded data until we figure the database out, **index 0 is always user's position**
-    String[] myDataset = {"My Name (selected by default)", "Bob", "Pete", "Alice", "Joe", "Fetty Wap"};
+    String newSquadName = "";
+    ArrayList<String> squadMembers = new ArrayList();
+    HashMap<String, String> uid = new HashMap<>();
+    String addUser;
+    String myId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_squad);
+        ref = new Firebase("https://squadpay-live.firebaseio.com");
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        // TRying to find current user here
+        myId = ref.getAuth().getUid();
+        myId ="800a1a88-968a-48fd-b23d-aa50efa128fd";
+        ref.child("username").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String p = (String) dataSnapshot.getValue();
+                if (p == null) { p = "800a1a88-968a-48fd-b23d-aa50efa128fd"; }
+                for (DataSnapshot c : dataSnapshot.getChildren()) {
+                    if (p.equals(myId) == true) {
+                        squadMembers.add(p);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -54,18 +84,10 @@ public class CreateSquadActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter
-        initData(); // All other members are not selected by default
-        mAdapter = new PersonDataAdapter(myDataset);
+
+        mAdapter = new PersonDataAdapter(squadMembers);
         mRecyclerView.setAdapter(mAdapter);
 
-    }
-
-    // Method for hardcoded data until we get the database figured out. Temporary method.
-    private void initData() {
-        for (String x : myDataset) {
-            map.put(x, false);
-        }
-        map.put(myDataset[0], true);
     }
 
     @Override
@@ -92,80 +114,6 @@ public class CreateSquadActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * This method decides if a user has been selected and responses to changes in the background
-     * of selected TextViews. True is selected. False is not selected.
-     *
-     * @param v
-     */
-    public void personSelection(View v) {
-        TextView tv = (TextView) v;
-        if (tv != null) {
-            // myDataset[0] is the active user and they are always selected
-            if (map.get(tv.getText().toString()) == false || myDataset[0].equals(tv.getText().toString()) == true) {
-                tv.setBackgroundColor(Color.LTGRAY);
-                map.put(tv.getText().toString(), true);
-            } else {
-                tv.setBackgroundColor(Color.WHITE);
-                map.put(tv.getText().toString(), false);
-            }
-        }
-    }
-
-    /**
-     * This method selects all users. If all users are already selected this method
-     * will deselect all users. See UI.
-     *
-     * @param v
-     */
-    public void personSelectAll(View v) {
-        View v1;
-
-        LinearLayoutManager llm = mLayoutManager;
-        int firstVis = llm.findFirstVisibleItemPosition();
-        int lastVis = llm.findLastCompletelyVisibleItemPosition();
-
-        if (firstVis == 0) { firstVis = 1; } // Current user is always highlighted
-        if (selectedAll() == false) {
-            for (int i = firstVis; i <= lastVis; i++) {
-                map.put(myDataset[i], false);
-            }
-        } else {
-            for (int i = firstVis; i <= lastVis; i++) {
-                map.put(myDataset[i], true);
-            }
-        }
-        for (int i = firstVis; i <= lastVis; i++) {
-            v1 = getItem(i);
-            personSelection(v1);
-        }
-    }
-
-    // Return true if all users are selected in the visible recyclerview
-    private boolean selectedAll() {
-        LinearLayoutManager llm = mLayoutManager;
-        int firstVis = llm.findFirstVisibleItemPosition();
-        int lastVis = llm.findLastCompletelyVisibleItemPosition();
-
-        if (firstVis == 0) { firstVis = 1; } // Current user is always highlighted
-        for (int i = firstVis; i <= lastVis; i++) {
-            if (map.get(myDataset[i]) == false) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // Returns true if all users are not selected
-    private boolean selectedNone() {
-        for (int i = 1; i < myDataset.length; i++) {
-            if (map.get(myDataset[i]) == true) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     // Return a specific View from our RecyclerView by index of position (Max B.)
     private View getItem(int pos) {
         return mRecyclerView.getLayoutManager().findViewByPosition(pos);
@@ -185,17 +133,46 @@ public class CreateSquadActivity extends AppCompatActivity {
             s = tv.getText().toString(); // Squad name here
             s = s.trim(); // cut whitespace
         }
-        if (selectedNone() == true || s == null || (s.equals("")) || s.length() > 20) {
+        if (s == null || (s.equals("")) || s.length() > 20 || squadMembers.size() == 0) {
             Toast.makeText(this, "Please make sure you have entered a title less than 21 characters " +
                     "and have at least one other person selected for your squad", Toast.LENGTH_LONG).show();
         } else {
             // This is where the squad will be added to the database eventually
             // If selected then add to database, etc.
+            newSquadName = s;
             Toast.makeText(this, "You have created a new Squad!", Toast.LENGTH_SHORT).show();
+            //Send out newSquadName
+            //Send out uid
             onBackPressed(); // go back
         }
     }
+    public void findUser(View v) {
+        final EditText editText = (EditText) findViewById(R.id.editText1);
+        addUser = editText.getText().toString();
 
+        Firebase emailRef = ref.child("usernames").child(addUser); // path
+        emailRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (addUser.equals("")) { return; }
+                String p = (String) dataSnapshot.getValue();
+                if (p != null && !p.equals("")) {
+                    if (squadMembers.contains(addUser)) { return; } // if the user exists don't add
+                    squadMembers.add(addUser);
+                    mAdapter.notifyDataSetChanged(); // update recyclerview
+                    uid.put(addUser, p); // put this user and their id in the hashmap uid
+                    editText.setText(""); // clear the text if you found a person
+                } else {
+                    Toast.makeText(getApplicationContext(), "This user does not exist!", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                // Nothing
+            }
+        });
+    }
 }
 /** Adapter class for the RecyclerView. This adapter is currently used to take data from
  *  myDataset to post to the RecyclerView, created in the onCreate method of the CreateSquadActivity.
@@ -204,7 +181,7 @@ public class CreateSquadActivity extends AppCompatActivity {
  *  the active users name in the RecyclerView. (Max B.)
  */
 class PersonDataAdapter extends RecyclerView.Adapter<PersonDataAdapter.ViewHolder> {
-    private String[] mDataset;
+    private ArrayList<String> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -217,13 +194,13 @@ class PersonDataAdapter extends RecyclerView.Adapter<PersonDataAdapter.ViewHolde
             // still need to figure out this part below before I can add other views
             // to this recycler view. This might not be necessary right now
             if (v.getParent() != null) { ((ViewGroup) v.getParent()).removeView(v); }
-            v.setTextSize(16f);
+            v.setTextSize(20f);
             mTextView = v;
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public PersonDataAdapter(String[] myDataset) {
+    public PersonDataAdapter(ArrayList<String> myDataset) {
         mDataset = myDataset;
     }
 
@@ -245,14 +222,13 @@ class PersonDataAdapter extends RecyclerView.Adapter<PersonDataAdapter.ViewHolde
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTextView.setText(mDataset[position]);
+        holder.mTextView.setText(mDataset.get(position));
         // inital set of active users background color (highlight)
-        if (position == 0) {holder.mTextView.setBackgroundColor(Color.LTGRAY);}
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }
