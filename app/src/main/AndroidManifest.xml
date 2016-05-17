@@ -46,7 +46,7 @@
             android:name=".CreateExpenseActivity"
             android:label="@string/title_activity_create_expense"
             android:parentActivityName=".SquadPayTabs"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.squadpay.SquadPayTabs" />
