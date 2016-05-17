@@ -148,7 +148,11 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
         View.OnClickListener floatingActionButtonClickListener = floatingActionButtonOnClickListeners.get(position);
 
         floatingActionButton.setOnClickListener(floatingActionButtonClickListener);
-        floatingActionButton.show();
+        if(position == 0) {
+            floatingActionButton.hide();
+        } else {
+            floatingActionButton.show();
+        }
 
     }
 
@@ -156,13 +160,6 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
         if (floatingActionButtonOnClickListeners == null) {
             floatingActionButtonOnClickListeners = new SparseArray<>();
         }
-
-        floatingActionButtonOnClickListeners.put(0, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firebaseRef.unauth();
-            }
-        });
 
         floatingActionButtonOnClickListeners.put(1, new View.OnClickListener() {
             @Override
@@ -200,8 +197,10 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
         if (id == R.id.action_settings) {
             return true;
         }
-        else if (id == R.id.add_squad) {
-            return true;
+        else if (id == R.id.logout) {
+            firebaseRef.unauth();
+            Intent intent = new Intent(SquadPayTabs.this, SquadPayTabs.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
