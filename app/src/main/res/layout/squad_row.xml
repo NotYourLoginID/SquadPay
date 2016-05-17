@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingTop="10dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="10dp"
     android:clickable="true"
-    android:background="#FFFFFF"
+    android:background="@drawable/abc_action_bar_item_background_material"
     android:orientation="vertical"
     android:nestedScrollingEnabled="false"
-    android:contextClickable="false">
+    android:contextClickable="false"
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp"
+    android:paddingRight="4dp"
+    android:paddingLeft="4dp"
+    android:elevation="10dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Squad Name"
-        android:id="@+id/textViewTitle"/>
-        <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_alignParentTop="true"-->
         <!--android:layout_centerHorizontal="true"-->
 
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="# People"
-        android:id="@+id/textViewCount"/>
-        <!--android:layout_below="@+id/textViewTitle"-->
+        android:paddingLeft="16dp"
+        android:paddingTop="10dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="10dp"
+        android:clickable="true"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:nestedScrollingEnabled="false"
+        android:contextClickable="false" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Squad Name"
+            android:id="@+id/textViewTitle"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="# People"
+            android:id="@+id/textViewCount"
+            android:layout_marginLeft="8dp" />
+    </LinearLayout>
+
+    <!--android:layout_below="@+id/textViewTitle"-->
         <!--android:layout_centerHorizontal="true" -->
 
-</LinearLayout>
+</FrameLayout>

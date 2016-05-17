@@ -18,6 +18,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -152,8 +153,8 @@ public class Expenses extends Fragment {
             holder.mDescription.setText(expenseData.get(position).get("description").toString());
             String val = expenseData.get(position).get("due").toString();
             Double due = Double.parseDouble(val);
-            DecimalFormat df = new DecimalFormat("###.##");
-            holder.mAmountDue.setText("$" + df.format(due));
+            NumberFormat nf = NumberFormat.getCurrencyInstance();
+            holder.mAmountDue.setText(nf.format(due));
         }
 
         public class ExpenseHolder extends RecyclerView.ViewHolder{

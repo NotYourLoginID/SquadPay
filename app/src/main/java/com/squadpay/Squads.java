@@ -149,7 +149,7 @@ public class Squads extends Fragment {
         public void onBindViewHolder(SquadHolder holder, int position){
 
             holder.mTitleText.setText(squadData.get(position).get("squadname").toString());
-            holder.mMemberCounter.setText(squadData.get(position).get("count").toString());
+            holder.mMemberCounter.setText(squadData.get(position).get("count").toString()+" Members");
         }
 
         public class SquadHolder extends RecyclerView.ViewHolder{
