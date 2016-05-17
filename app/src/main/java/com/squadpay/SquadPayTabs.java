@@ -229,8 +229,17 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.add_squad) {
+            Intent intent = new Intent(SquadPayTabs.this, CreateSquadActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.add_expense) {
+            Intent intent = new Intent(SquadPayTabs.this, CreateExpenseActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.action_settings) {
             Intent intent = new Intent(SquadPayTabs.this, Settings.class);
             startActivity(intent);
         }
