@@ -94,9 +94,15 @@
         android:singleLine="true" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create User"
         android:id="@+id/buttonCreateUser"
-        android:layout_marginLeft="24dp" />
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/editTextPasswordConfirm"
+        android:layout_alignEnd="@+id/editTextPasswordConfirm"
+        android:layout_alignStart="@+id/editTextPasswordConfirm"
+        android:background="@color/white"/>
 </LinearLayout>
