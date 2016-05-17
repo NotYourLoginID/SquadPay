@@ -32,6 +32,9 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+
 public class SquadPayTabs extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -54,6 +57,10 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
 
+    private static final String FIREBASE_URL = "https://squadpay-live.firebaseio.com";
+    private Firebase firebaseRef;
+    private AuthData authData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +72,13 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
         // Chris - attempting to make a nav button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+
+        firebaseRef = new Firebase(FIREBASE_URL);
+        authData = firebaseRef.getAuth();
+
+        if(authData == null) {
+            startActivity(new Intent(SquadPayTabs.this, MainActivity.class));
+        }
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -146,8 +160,7 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
         floatingActionButtonOnClickListeners.put(0, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txt = "FEED";
-                createtoast(txt);
+                firebaseRef.unauth();
             }
         });
 
