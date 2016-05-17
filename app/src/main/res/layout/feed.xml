@@ -3,12 +3,15 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/feed_recycler"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Feed"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:scrollbars="vertical"
+            android:layout_weight="1"
+            android:elevation="0dp"
+            android:contextClickable="false">
+
+        </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
