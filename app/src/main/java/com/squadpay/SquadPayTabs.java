@@ -341,8 +341,13 @@ public class SquadPayTabs extends AppCompatActivity implements NavigationView.On
                 }
 
             } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
+
                 for (int i = 0; i < 100; i++) {
-                    data[i] = "Name of Squad" + "\n" + "Number of members" + "\n" + "Creation date";
+                    data[i] = "Name of Squad" + "\n" + "Number of members";
+
+
+
+
                 }
             } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 1){
                 for (int i = 0; i < 100; i++) {
